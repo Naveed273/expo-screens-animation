@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 import {
   ScrollView,
   Text,
@@ -6,43 +6,36 @@ import {
   Pressable,
   Image,
   Dimensions,
-} from 'react-native';
-import { StatusBar } from 'expo-status-bar';
-import { SimpleLineIcons } from '@expo/vector-icons';
-import { SharedElement } from 'react-navigation-shared-element';
+  SafeAreaView,
+} from "react-native";
+import { StatusBar } from "expo-status-bar";
+import { SimpleLineIcons } from "@expo/vector-icons";
+import { SharedElement } from "react-navigation-shared-element";
 
-import { data } from '../config/data';
+import { data } from "../config/data";
 
-const { width } = Dimensions.get('screen');
+const { width } = Dimensions.get("screen");
 
-const ITEM_WIDTH = width * 0.9;
-const ITEM_HEIGHT = ITEM_WIDTH * 0.9;
+const ITEM_WIDTH = width * 0.99;
+const ITEM_HEIGHT = ITEM_WIDTH * 0.8;
 
 export default function HomeScreen({ navigation }) {
   return (
-    <View style={{ flex: 1, backgroundColor: '#0f0f0f' }}>
-      <StatusBar hidden />
+    <SafeAreaView style={{ flex: 1, backgroundColor: "#0f0f0f" }}>
       {/* Header */}
-      <View style={{ marginTop: 50, marginBottom: 20, paddingHorizontal: 20 }}>
-        <Text style={{ color: '#888', textTransform: 'uppercase' }}>
-          Saturday 9 January
-        </Text>
-        <Text style={{ color: '#fff', fontSize: 32, fontWeight: '600' }}>
-          Today
-        </Text>
-      </View>
+
       {/* Scrollable content */}
       <View style={{ flex: 1, paddingBottom: 20 }}>
         <ScrollView
           indicatorStyle="white"
-          contentContainerStyle={{ alignItems: 'center' }}
+          contentContainerStyle={{ alignItems: "center" }}
         >
-          {data.map(item => (
+          {data.map((item) => (
             <View key={item.id}>
               <Pressable
                 activeOpacity={0.8}
                 style={{ marginBottom: 14 }}
-                onPress={() => navigation.navigate('DetailScreen', { item })}
+                onPress={() => navigation.navigate("DetailScreen", { item })}
               >
                 <SharedElement id={`item.${item.id}.image_url`}>
                   <Image
@@ -57,12 +50,12 @@ export default function HomeScreen({ navigation }) {
                 </SharedElement>
                 <View
                   style={{
-                    position: 'absolute',
+                    position: "absolute",
                     bottom: 20,
                     left: 10,
                   }}
                 >
-                  <View style={{ flexDirection: 'row' }}>
+                  <View style={{ flexDirection: "row" }}>
                     <SharedElement id={`item.${item.id}.iconName`}>
                       <SimpleLineIcons
                         size={40}
@@ -70,13 +63,13 @@ export default function HomeScreen({ navigation }) {
                         name={item.iconName}
                       />
                     </SharedElement>
-                    <View style={{ flexDirection: 'column', paddingLeft: 6 }}>
+                    <View style={{ flexDirection: "column", paddingLeft: 6 }}>
                       <SharedElement id={`item.${item.id}.title`}>
                         <Text
                           style={{
-                            color: 'white',
+                            color: "white",
                             fontSize: 24,
-                            fontWeight: 'bold',
+                            fontWeight: "bold",
                             lineHeight: 28,
                           }}
                         >
@@ -86,9 +79,9 @@ export default function HomeScreen({ navigation }) {
                       <SharedElement id={`item.${item.id}.description`}>
                         <Text
                           style={{
-                            color: 'white',
+                            color: "white",
                             fontSize: 16,
-                            fontWeight: 'bold',
+                            fontWeight: "bold",
                             lineHeight: 18,
                           }}
                         >
@@ -103,6 +96,6 @@ export default function HomeScreen({ navigation }) {
           ))}
         </ScrollView>
       </View>
-    </View>
+    </SafeAreaView>
   );
 }

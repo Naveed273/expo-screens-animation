@@ -4,6 +4,7 @@ import { createSharedElementStackNavigator } from "react-navigation-shared-eleme
 
 import HomeScreen from "../screens/HomeScreen";
 import DetailScreen from "../screens/DetailScreen";
+import QrcodeScanner from "../screens/QrcodeScanner";
 
 const Stack = createSharedElementStackNavigator();
 
@@ -26,6 +27,7 @@ export default function RootNavigator() {
         initialRouteName="Home"
         screenOptions={{ headerShown: false }}
       >
+        <Stack.Screen name="QrcodeScreen" component={QrcodeScanner} />
         <Stack.Screen name="HomeScreen" component={HomeScreen} />
         <Stack.Screen
           name="DetailScreen"
