@@ -27,13 +27,13 @@ export default function RootNavigator() {
         initialRouteName="Home"
         screenOptions={{ headerShown: false }}
       >
-        <Stack.Screen name="QrcodeScreen" component={QrcodeScanner} />
         <Stack.Screen name="HomeScreen" component={HomeScreen} />
         <Stack.Screen
           name="DetailScreen"
           component={DetailScreen}
           options={() => options}
         />
+        <Stack.Screen name="QrcodeScreen" component={QrcodeScanner} />
       </Stack.Navigator>
     </NavigationContainer>
   );
