@@ -5,7 +5,8 @@
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
-    "userInterfaceStyle": "dark mode",
+    "userInterfaceStyle": "light",
+
     "splash": {
       "image": "./assets/splash.png",
       "resizeMode": "contain",
@@ -16,11 +17,11 @@
     },
     "assetBundlePatterns": ["**/*"],
     "ios": {
-      "userInterfaceStyle": "dark mode",
+      "userInterfaceStyle": "light",
       "supportsTablet": true
     },
     "android": {
-      "userInterfaceStyle": "dark mode",
+      "userInterfaceStyle": "light",
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
