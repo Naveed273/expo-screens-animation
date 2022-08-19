@@ -21,6 +21,7 @@
       "supportsTablet": true
     },
     "android": {
+      "permissions": ["FOREGROUND_SERVICE", "NOTIFICATIONS"],
       "userInterfaceStyle": "light",
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
