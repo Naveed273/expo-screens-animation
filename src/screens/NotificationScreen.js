@@ -1,7 +1,15 @@
 import * as Device from "expo-device";
 import * as Notifications from "expo-notifications";
 import React, { useState, useEffect, useRef } from "react";
-import { Text, View, Button, Platform } from "react-native";
+import {
+  Text,
+  View,
+  Button,
+  Platform,
+  SafeAreaView,
+  ScrollView,
+} from "react-native";
+import SvgComponent from "../components/svgComponent";
 
 Notifications.setNotificationHandler({
   handleNotification: async () => ({
@@ -84,11 +92,12 @@ export default function NotificationScreen() {
   }, []);
 
   return (
-    <View
+    <ScrollView
       style={{
         flex: 1,
-        alignItems: "center",
-        justifyContent: "space-around",
+        marginTop: 200,
+        // alignItems: "center",
+        // justifyContent: "space-around",
       }}
     >
       <View style={{ alignItems: "center", justifyContent: "center" }}>
@@ -107,6 +116,10 @@ export default function NotificationScreen() {
           await schedulePushNotification();
         }}
       />
-    </View>
+      <View style={{ alignItems: "center" }}>
+        <Text>Svg example</Text>
+        <SvgComponent />
+      </View>
+    </ScrollView>
   );
 }
