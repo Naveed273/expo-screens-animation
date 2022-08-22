@@ -18,7 +18,8 @@
     "assetBundlePatterns": ["**/*"],
     "ios": {
       "userInterfaceStyle": "light",
-      "supportsTablet": true
+      "supportsTablet": true,
+      "googleServicesFile": "./src/config/GoogleService-Info.plist"
     },
     "android": {
       "permissions": ["FOREGROUND_SERVICE", "NOTIFICATIONS"],
@@ -27,7 +28,8 @@
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
       },
-      "package": "com.naveedinfosun.sharedelementransitions"
+      "package": "com.naveedinfosun.sharedelementransitions",
+      "googleServicesFile": "./src/config/google-services.json"
     },
     "web": {
       "favicon": "./assets/favicon.png"
