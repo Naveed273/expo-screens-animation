@@ -5,6 +5,7 @@ import HomeScreen from "../screens/HomeScreen";
 import DetailScreen from "../screens/DetailScreen";
 import QrcodeScanner from "../screens/QrcodeScanner";
 import NotificationScreen from "../screens/NotificationScreen";
+import SvgScreen from "../screens/SvgScreen";
 const Stack = createSharedElementStackNavigator();
 
 const options = {
@@ -26,6 +27,7 @@ export default function RootNavigator() {
         initialRouteName="Home"
         screenOptions={{ headerShown: false }}
       >
+        <Stack.Screen name="SvgScreen" component={SvgScreen} />
         <Stack.Screen
           name="NotificationScreen"
           component={NotificationScreen}

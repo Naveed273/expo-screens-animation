@@ -9,7 +9,6 @@ import {
   SafeAreaView,
   ScrollView,
 } from "react-native";
-import SvgComponent from "../components/svgComponent";
 
 Notifications.setNotificationHandler({
   handleNotification: async () => ({
@@ -116,10 +115,6 @@ export default function NotificationScreen() {
           await schedulePushNotification();
         }}
       />
-      <View style={{ alignItems: "center" }}>
-        <Text>Svg example</Text>
-        <SvgComponent />
-      </View>
     </ScrollView>
   );
 }
