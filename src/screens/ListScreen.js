@@ -6,10 +6,11 @@ import {
   SafeAreaView,
   StyleSheet,
   Image,
+  TouchableOpacity,
 } from "react-native";
 import myAxios from "../config/axiosInterceptor";
 
-export default function ListScreen() {
+export default function ListScreen(props) {
   const [list, setlist] = useState();
   useEffect(() => {
     getData();
@@ -25,21 +26,23 @@ export default function ListScreen() {
 
   const listRenderItem = useCallback(
     ({ item }) => (
-      <View
-        style={{
-          flexDirection: "row",
-          justifyContent: "space-between",
-          alignItems: "center",
-          marginVertical: 5,
-        }}
-      >
-        <Text style={{ color: "black", flex: 1 }}>{item.name}</Text>
-        <Image
-          source={{ uri: item.image_link }}
-          style={{ width: 50, height: 50 }}
-          resizeMode="cover"
-        />
-      </View>
+      <TouchableOpacity onPress={() => props.navigation.navigate("HomeScreen")}>
+        <View
+          style={{
+            flexDirection: "row",
+            justifyContent: "space-between",
+            alignItems: "center",
+            marginVertical: 5,
+          }}
+        >
+          <Text style={{ color: "black", flex: 1 }}>{item.name}</Text>
+          <Image
+            source={{ uri: item.image_link }}
+            style={{ width: 50, height: 50 }}
+            resizeMode="cover"
+          />
+        </View>
+      </TouchableOpacity>
     ),
     []
   );
