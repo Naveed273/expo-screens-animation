@@ -6,9 +6,10 @@ The timeout is set to 10s. If the request takes longer than
 that then the request will be aborted.
 */
 const myAxios = axios.create({
-  baseURL: `https://example.com/api`,
-  timeout: 10000,
-  headers: { "api-key": "xxxx-xxxx-xxxx-xxxxx" },
+  // baseURL: `https://api.publicapis.org/entries`,
+  baseURL: `http://makeup-api.herokuapp.com/api/v1/products.json?brand=maybelline`,
+  // timeout: 10000,
+  // headers: { "api-key": "xxxx-xxxx-xxxx-xxxxx" },
 });
 
 // Step-2: Create request, response & error handlers

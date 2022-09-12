@@ -91,15 +91,16 @@ export default function NotificationScreen() {
   }, []);
 
   return (
-    <ScrollView
+    <View
       style={{
         flex: 1,
         marginTop: 200,
-        // alignItems: "center",
-        // justifyContent: "space-around",
+        alignItems: "center",
+        justifyContent: "space-around",
       }}
     >
       <View style={{ alignItems: "center", justifyContent: "center" }}>
+        <Text>Your expo push token: {expoPushToken}</Text>
         <Text>
           Title: {notification && notification.request.content.title}{" "}
         </Text>
@@ -115,6 +116,6 @@ export default function NotificationScreen() {
           await schedulePushNotification();
         }}
       />
-    </ScrollView>
+    </View>
   );
 }
