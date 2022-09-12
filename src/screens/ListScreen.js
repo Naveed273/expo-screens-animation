@@ -8,7 +8,7 @@ import {
   Image,
 } from "react-native";
 import myAxios from "../config/axiosInterceptor";
-let count = 0;
+
 export default function ListScreen() {
   const [list, setlist] = useState();
   useEffect(() => {
@@ -22,9 +22,9 @@ export default function ListScreen() {
       console.log({ e });
     }
   };
-  const listRenderItem = ({ item }) => {
-    console.log({ count: count + 1 });
-    return (
+
+  const listRenderItem = useCallback(
+    ({ item }) => (
       <View
         style={{
           flexDirection: "row",
@@ -40,39 +40,19 @@ export default function ListScreen() {
           resizeMode="cover"
         />
       </View>
-    );
-  };
-  // const listRenderItem = useCallback(
-  //   ({ item }) => (
-  //     <View
-  //       style={{
-  //         flexDirection: "row",
-  //         justifyContent: "space-between",
-  //         alignItems: "center",
-  //         marginVertical: 5,
-  //       }}
-  //     >
-  //       <Text style={{ color: "black", flex: 1 }}>{item.name}</Text>
-  //       <Image
-  //         source={{ uri: item.image_link }}
-  //         style={{ width: 50, height: 50 }}
-  //         resizeMode="cover"
-  //       />
-  //     </View>
-  //   ),
-  //   []
-  // );
-  const listKeyExtractor = (item) => item.id;
-  // const listKeyExtractor = useCallback((item) => item.id, []);
-  const listItemSeparator = () => (
-    <View style={{ height: 0.1, borderTopWidth: 0.5, borderColor: "gray" }} />
+    ),
+    []
   );
-  // const listItemSeparator = useCallback(
-  //   () => (
-  //     <View style={{ height: 0.1, borderTopWidth: 0.5, borderColor: "gray" }} />
-  //   ),
-  //   []
-  // );
+  const listKeyExtractor = useCallback(
+    (item) => `awesome-child-key-${item.id}`,
+    []
+  );
+  const listItemSeparator = useCallback(
+    () => (
+      <View style={{ height: 0.1, borderTopWidth: 0.5, borderColor: "gray" }} />
+    ),
+    []
+  );
   return (
     <SafeAreaView style={styles.container}>
       <Text style={{ color: "black", fontSize: 18, textAlign: "center" }}>
