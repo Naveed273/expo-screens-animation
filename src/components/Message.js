@@ -9,7 +9,7 @@ const Message = () => {
   const { message } = useSelector((state) => state.message);
 
   const handlePress = () => {
-    dispatch(setMessage("Message from Component"));
+    dispatch(setMessage("Message state updated"));
   };
 
   return (

@@ -1,12 +1,10 @@
-import { configureStore } from '@reduxjs/toolkit';
-import messageReducer from './message';
-import usersReducer from './users';
+import { configureStore } from "@reduxjs/toolkit";
+import messageReducer from "./message";
+import postsReducer from "./posts";
 
 export const store = configureStore({
   reducer: {
     message: messageReducer,
-    users: usersReducer
-  }
+    posts: postsReducer,
+  },
 });
-
-

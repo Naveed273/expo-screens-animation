@@ -3,7 +3,7 @@ import { SafeAreaView, ScrollView, StatusBar, StyleSheet } from "react-native";
 import { Provider } from "react-redux";
 import { store } from "./src/store";
 import Message from "./src/components/Message";
-import Users from "./src/components/Users";
+import Posts from "./src/components/Posts";
 
 const App = () => {
   return (
@@ -11,8 +11,7 @@ const App = () => {
       <StatusBar barStyle="dark-content" />
       <SafeAreaView style={styles.container}>
         <ScrollView contentContainerStyle={styles.container}>
-          <Message />
-          <Users />
+          <Posts />
         </ScrollView>
       </SafeAreaView>
     </Provider>
