@@ -29,7 +29,7 @@ export default ChatScreen = () => {
       body: "Yes",
       chat_id: 380,
       id: "0307c38f-c602-40cb-8288-b378dc0313df",
-      sender_id: 483,
+      sender_id: 2,
       created_at: new Date(),
       updated_at: new Date(),
     },
@@ -37,7 +37,7 @@ export default ChatScreen = () => {
       body: "Wor",
       chat_id: 380,
       id: "483ff727-8da3-4bb3-acc4-3baea24dbea7",
-      sender_id: 483,
+      sender_id: 2,
       created_at: new Date(),
       updated_at: new Date(),
     },
@@ -45,7 +45,7 @@ export default ChatScreen = () => {
       body: "It is really working",
       chat_id: 380,
       id: "4d8efce1-18d3-4a51-a128-a38f6a2f41f2",
-      sender_id: 483,
+      sender_id: 1,
       created_at: new Date(),
       updated_at: new Date(),
     },
@@ -53,7 +53,7 @@ export default ChatScreen = () => {
       body: "It is wonderful",
       chat_id: 380,
       id: "a78df43d-74fb-4f04-abd2-ddb110d3c35d",
-      sender_id: 483,
+      sender_id: 1,
       created_at: new Date(),
       updated_at: new Date(),
     },
@@ -61,7 +61,7 @@ export default ChatScreen = () => {
       body: "Like a pro",
       chat_id: 380,
       id: "490d9026-f103-46ae-b4eb-ad0e8cb93f36",
-      sender_id: 483,
+      sender_id: 2,
       created_at: new Date(),
       updated_at: new Date(),
     },
@@ -69,7 +69,7 @@ export default ChatScreen = () => {
       body: "Why you are not replying",
       chat_id: 380,
       id: "548a0b87-cbc4-49b1-b943-745ad914d1fd",
-      sender_id: 483,
+      sender_id: 1,
       created_at: new Date(),
       updated_at: new Date(),
     },
@@ -77,7 +77,7 @@ export default ChatScreen = () => {
       body: "Please reply",
       chat_id: 380,
       id: "be948cf7-f806-48fd-b5bd-334c2fa40918",
-      sender_id: 483,
+      sender_id: 2,
       created_at: new Date(),
       updated_at: new Date(),
     },
@@ -149,15 +149,15 @@ export default ChatScreen = () => {
           scrollViewRef.current.scrollToEnd({ animated: true })
         }
       >
-        <View style={{ padding: 20 }}>
+        <View style={{ paddingHorizontal: 5, paddingVertical: 20 }}>
           {allPrevMessages?.length > 0 &&
             allPrevMessages.map((item, index) => {
               // For easier uniqueness check,Formated date string example '16082021'
               const dateNum = moment(item.created_at).format("ddMMyyyy");
 
-              if (item.sender_id !== 2) {
+              if (item.sender_id !== 1) {
                 return (
-                  <View style={styles.myChatView}>
+                  <View style={styles.myChatView} key={index}>
                     {dates.has(dateNum) ? null : renderDate(item, dateNum)}
                     <View style={styles.myChat}>
                       <Text style={styles.myChatText}>{item.body}</Text>
@@ -169,7 +169,7 @@ export default ChatScreen = () => {
                 );
               } else {
                 return (
-                  <View style={styles.senderChatView}>
+                  <View style={styles.senderChatView} key={index}>
                     {dates.has(dateNum) ? null : renderDate(item, dateNum)}
                     <View
                       style={{
@@ -184,7 +184,7 @@ export default ChatScreen = () => {
                           maxWidth: 275,
                           paddingHorizontal: 15,
                           paddingVertical: 15,
-                          margin: 15,
+                          marginHorizontal: 15,
                           borderRadius: 20,
                           borderTopRightRadius: 0,
                         }}
@@ -211,8 +211,6 @@ export default ChatScreen = () => {
       </ScrollView>
 
       <View style={styles.footer}>
-        <View style={styles.fo} />
-
         <View
           style={{
             ...styles.messageInputContainer,
@@ -228,13 +226,14 @@ export default ChatScreen = () => {
             textAlignVertical={"center"}
             multiline={true}
             style={{
-              width: "100%",
+              //   width: "80%",
               minHeight: 50,
               fontSize: 19,
               fontWeight: "400",
               color: "black",
               paddingTop: 16,
               paddingBottom: 12,
+              flex: 1,
             }}
           />
 
@@ -244,10 +243,10 @@ export default ChatScreen = () => {
           >
             <Ionicons name={"send"} size={24} color={"black"} />
           </TouchableOpacity>
+          <TouchableOpacity style={styles.audioIcon}>
+            <FontAwesome5 name={"microphone-alt"} size={24} color={"black"} />
+          </TouchableOpacity>
         </View>
-        <TouchableOpacity style={styles.audioIcon}>
-          <FontAwesome5 name={"microphone-alt"} size={24} color={"black"} />
-        </TouchableOpacity>
       </View>
     </SafeAreaView>
   );
@@ -282,6 +281,7 @@ const styles = StyleSheet.create({
   },
   headerTitleText: {
     fontSize: 18,
+    fontWeight: "700",
     color: "black",
     marginRight: 5,
   },
@@ -328,13 +328,14 @@ const styles = StyleSheet.create({
   },
   senderChatView: {
     alignItems: "flex-end",
+    marginVertical: 10,
   },
   senderChat: {
     backgroundColor: "black",
     maxWidth: 275,
     paddingHorizontal: 15,
     paddingVertical: 15,
-    margin: 15,
+    marginHorizontal: 15,
     borderRadius: 20,
     borderTopRightRadius: 0,
   },
@@ -352,13 +353,15 @@ const styles = StyleSheet.create({
   },
   myChatView: {
     alignItems: "flex-start",
+    marginVertical: 10,
   },
   myChat: {
     backgroundColor: "#EEEEEE",
     maxWidth: 275,
     paddingHorizontal: 18,
     paddingVertical: 15,
-    margin: 15,
+    marginHorizontal: 15,
+
     borderRadius: 20,
     borderTopLeftRadius: 0,
   },
@@ -375,9 +378,8 @@ const styles = StyleSheet.create({
     marginTop: 10,
   },
   audioIcon: {
-    flexDirection: "row",
-    alignItems: "center",
-    marginLeft: 10,
+    alignItems: "flex-end",
+    flex: 0.1,
   },
   footer: {
     alignItems: "center",
@@ -385,13 +387,8 @@ const styles = StyleSheet.create({
     justifyContent: "flex-start",
     borderTopRightRadius: 20,
     borderTopLeftRadius: 20,
-    minHeight: 118,
+    minHeight: 80,
     maxHeight: "auto",
-    // shadowOffset: { width: 0, height: 1 },
-    // shadowOpacity: 0.85,
-    // shadowRadius: 20,
-    // elevation: 2,
-    // shadowColor: '#C2C2C2',
     borderWidth: 0.5,
     borderBottomWidth: 0,
     borderColor: "#e4e4e4",
@@ -400,9 +397,8 @@ const styles = StyleSheet.create({
     marginHorizontal: 10,
   },
   messageInputContainer: {
-    paddingLeft: 10,
-    marginLeft: 15,
-    paddingRight: 50,
+    paddingHorizontal: 10,
+    marginHorizontal: 15,
     alignItems: "center",
     justifyContent: "flex-start",
     flexDirection: "row",
@@ -411,13 +407,11 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     height: "auto",
     marginTop: 10,
-    width: 350,
+    flex: 1,
   },
   sendIcon: {
-    position: "absolute",
-    backgroundColor: "transparent",
-    paddingLeft: 50,
-    marginLeft: 250,
+    flex: 0.2,
+    alignItems: "flex-end",
   },
   shareContainer: {
     flexDirection: "column",

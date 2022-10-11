@@ -7,6 +7,7 @@ import QrcodeScanner from "../screens/QrcodeScanner";
 import NotificationScreen from "../screens/NotificationScreen";
 import SvgScreen from "../screens/SvgScreen";
 import ListScreen from "../screens/ListScreen";
+import ChatScreen from "../screens/ChatScreen";
 const Stack = createSharedElementStackNavigator();
 
 const options = {
@@ -28,6 +29,7 @@ export default function RootNavigator() {
         initialRouteName="Home"
         screenOptions={{ headerShown: false }}
       >
+        <Stack.Screen name="ChatScreen" component={ChatScreen} />
         <Stack.Screen name="ListScreen" component={ListScreen} />
         <Stack.Screen
           name="NotificationScreen"

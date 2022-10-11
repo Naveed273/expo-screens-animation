@@ -1,20 +1,22 @@
 import React from "react";
-import { SafeAreaView, ScrollView, StatusBar, StyleSheet } from "react-native";
+import {
+  SafeAreaView,
+  ScrollView,
+  StatusBar,
+  StyleSheet,
+  View,
+} from "react-native";
 import { Provider } from "react-redux";
 import { store } from "./src/store";
 import Message from "./src/components/Message";
 import Posts from "./src/components/Posts";
+import RootNavigator from "./src/navigation/RootNavigator";
 
 const App = () => {
   return (
-    <Provider store={store}>
-      <StatusBar barStyle="dark-content" />
-      <SafeAreaView style={styles.container}>
-        <ScrollView contentContainerStyle={styles.container}>
-          <Posts />
-        </ScrollView>
-      </SafeAreaView>
-    </Provider>
+    <View style={styles.container}>
+      <RootNavigator />
+    </View>
   );
 };
 
