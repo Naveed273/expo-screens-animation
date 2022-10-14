@@ -17,7 +17,7 @@ import AudioTestMessage from "./src/components/AudioTestMessage";
 const App = () => {
   return (
     <View style={styles.container}>
-      <AudioTestMessage />
+      <RootNavigator />
     </View>
   );
 };
