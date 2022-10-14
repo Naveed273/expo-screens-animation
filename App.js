@@ -12,11 +12,12 @@ import Message from "./src/components/Message";
 import Posts from "./src/components/Posts";
 import RootNavigator from "./src/navigation/RootNavigator";
 import AudioMessage from "./src/components/AudioMessage";
+import AudioTestMessage from "./src/components/AudioTestMessage";
 
 const App = () => {
   return (
     <View style={styles.container}>
-      <AudioMessage />
+      <AudioTestMessage />
     </View>
   );
 };
