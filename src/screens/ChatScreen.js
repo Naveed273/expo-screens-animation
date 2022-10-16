@@ -15,7 +15,7 @@ import {
 
 import uuid from "react-native-uuid";
 import { useIsFocused } from "@react-navigation/native";
-import moment from "moment";
+import moment, { duration } from "moment";
 
 import Ionicons from "react-native-vector-icons/Ionicons";
 import AntDesign from "react-native-vector-icons/AntDesign";
@@ -137,55 +137,75 @@ export default ChatScreen = () => {
     }
   }
   const handleAudio = async (recording, index) => {
-    recording.sound.replayAsync();
-    const { sound, status } = await Audio.Sound.createAsync(
-      {
-        uri: recording.file,
-      },
-      { shouldPlay: true },
-      (status) => {
-        setpositionMillis(getDurationFormatted(status.positionMillis));
-        setcurrentIndex(index);
-        if (status.isLoaded && status.isPlaying) {
-          setisPlaying(true);
-        } else {
-          setisPlaying(false);
-        }
-        // console.log({ firstStatus: status });
-      }
-    );
-    // if (soundStatus.status === null) {
-    //   // console.log("Loading Sound");
-    //   const { sound, status } = await Audio.Sound.createAsync(
-    //     {
-    //       uri: recording.file,
-    //     },
-    //     { shouldPlay: true },
-    //     (status) => {
+    // recording.sound.replayAsync();
+    // const { sound, status } = await Audio.Sound.createAsync(
+    //   {
+    //     uri: recording.file,
+    //   },
+    //   { shouldPlay: true },
+    //   (status) => {
+    //     setcurrentIndex(index);
+    //     if (status.isLoaded && status.isPlaying) {
     //       setpositionMillis(getDurationFormatted(status.positionMillis));
-    //       // console.log({ firstStatus: status });
+    //       setisPlaying(true);
+    //     } else {
+    //       setisPlaying(false);
     //     }
-    //   );
-
-    //   setSound(sound);
-    //   setSoundStatus({ status: status, icon: "pausecircleo" });
-    // }
-
-    // //pause audio
-    // if (soundStatus.status) {
-    //   if (soundStatus.status.isLoaded && soundStatus.status.isPlaying) {
-    //     const status = await sound.pauseAsync();
-    //     // console.log("pausingStatus", { ...status });
-    //     setSoundStatus({ status: status, icon: "playcircleo" });
+    //     // console.log({ firstStatus: status });
     //   }
+    // );
+    if (soundStatus.status === null) {
+      // console.log("Loading Sound");
+      const { sound, status } = await Audio.Sound.createAsync(
+        {
+          uri: recording.file,
+        },
+        { shouldPlay: true },
+        async (status) => {
+          setcurrentIndex(index);
+          if (status.isLoaded && status.isPlaying) {
+            setpositionMillis(getDurationFormatted(status.positionMillis));
+            setisPlaying(true);
+          } else {
+            setisPlaying(false);
+          }
+          if (status.positionMillis === status.durationMillis) {
+            setSoundStatus({ status: null, icon: "playcircleo" });
+            setpositionMillis(null);
+          }
+        }
+      );
 
-    //   //resuming audio
-    //   if (soundStatus.status.isLoaded && !soundStatus.status.isPlaying) {
-    //     const status = await sound.replayAsync();
-    //     // console.log("resumingStatus", { ...status });
-    //     setSoundStatus({ status: status, icon: "playcircleo" });
-    //   }
-    // }
+      setSound(sound);
+      setSoundStatus({ status: status, icon: "pausecircleo" });
+    }
+
+    //pause audio
+    if (soundStatus.status) {
+      if (soundStatus.status.isLoaded && soundStatus.status.isPlaying) {
+        const status = await sound.pauseAsync();
+        console.log("pausingStatus", { ...status });
+        setSoundStatus({ status: status, icon: "playcircleo" });
+      }
+
+      //resuming audio
+      if (
+        soundStatus.status.isLoaded &&
+        !soundStatus.status.isPlaying &&
+        !soundStatus.status.shouldPlay
+      ) {
+        const status = await sound.playAsync();
+
+        console.log("resumingStatus", { ...status });
+        setSoundStatus({ status: status, icon: "playcircleo" });
+      }
+      // replaying audio
+      if (!soundStatus.status.isLoaded && !soundStatus.status.isPlaying) {
+        const status = await sound.replayAsync();
+        console.log("replayingStatus", { ...status });
+        setSoundStatus({ status: status, icon: "playcircleo" });
+      }
+    }
   };
   async function stopRecording() {
     console.log("Stopping recording..");
@@ -307,7 +327,7 @@ export default ChatScreen = () => {
         <View style={{ paddingHorizontal: 5, paddingVertical: 20 }}>
           {allPrevMessages?.length > 0 &&
             allPrevMessages.map((item, index) => {
-              console.log({ item });
+              // console.log({ item });
               // For easier uniqueness check,Formated date string example '16082021'
               const dateNum = moment(item.created_at).format("ddMMyyyy");
 
@@ -339,7 +359,10 @@ export default ChatScreen = () => {
                               color="orange"
                             />
                             <Text style={styles.fill}>
-                              Recording - {item?.duration}
+                              Recording -
+                              {currentIndex === index && positionMillis
+                                ? positionMillis
+                                : item?.duration}
                             </Text>
                           </View>
                         ) : (
@@ -391,7 +414,10 @@ export default ChatScreen = () => {
                               color="orange"
                             />
                             <Text style={styles.fill}>
-                              Recording - {item?.duration}
+                              Recording -
+                              {currentIndex === index && positionMillis
+                                ? positionMillis
+                                : item?.duration}
                             </Text>
                           </View>
                         ) : (
