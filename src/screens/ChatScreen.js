@@ -109,6 +109,8 @@ export default ChatScreen = () => {
   const [isPlaying, setisPlaying] = useState(false);
   const [recordings, setRecordings] = useState([]);
   const [positionMillis, setpositionMillis] = useState(0);
+  const [recordingMillis, setrecordingMillis] = useState(null);
+  // const [, set] = useState(second)
   const [record, setRecord] = useState(null);
   const [sound, setSound] = React.useState(null);
   const [currentIndex, setcurrentIndex] = useState(null);
@@ -117,7 +119,6 @@ export default ChatScreen = () => {
     icon: "playcircleo",
   });
   async function startRecording() {
-    setisRecording(true);
     try {
       console.log("Requesting permissions..");
       await Audio.requestPermissionsAsync();
@@ -126,36 +127,23 @@ export default ChatScreen = () => {
         playsInSilentModeIOS: true,
       });
       console.log("Starting recording..");
-      const { recording } = await Audio.Recording.createAsync(
-        Audio.RecordingOptionsPresets.HIGH_QUALITY
+      const { recording, status } = await Audio.Recording.createAsync(
+        Audio.RecordingOptionsPresets.HIGH_QUALITY,
+        (status) => {
+          setisRecording(status.isRecording);
+          setrecordingMillis(getDurationFormatted(status.durationMillis));
+        }
       );
+
       setRecording(recording);
       console.log("Recording started");
     } catch (err) {
       console.error("Failed to start recording", err);
-      setisRecording(false);
     }
   }
   const handleAudio = async (recording, index) => {
-    // recording.sound.replayAsync();
-    // const { sound, status } = await Audio.Sound.createAsync(
-    //   {
-    //     uri: recording.file,
-    //   },
-    //   { shouldPlay: true },
-    //   (status) => {
-    //     setcurrentIndex(index);
-    //     if (status.isLoaded && status.isPlaying) {
-    //       setpositionMillis(getDurationFormatted(status.positionMillis));
-    //       setisPlaying(true);
-    //     } else {
-    //       setisPlaying(false);
-    //     }
-    //     // console.log({ firstStatus: status });
-    //   }
-    // );
     if (soundStatus.status === null) {
-      // console.log("Loading Sound");
+      console.log("Loading Sound");
       const { sound, status } = await Audio.Sound.createAsync(
         {
           uri: recording.file,
@@ -211,6 +199,7 @@ export default ChatScreen = () => {
     console.log("Stopping recording..");
     setRecording(undefined);
     await recording.stopAndUnloadAsync();
+    setrecordingMillis(null);
     const uri = recording.getURI();
     // console.log("Recording stopped and stored at", uri);
     let updatedRecordings = [...recordings];
@@ -231,7 +220,6 @@ export default ChatScreen = () => {
       file: uri,
     });
     setRecordings(updatedRecordings);
-    setisRecording(false);
     setAllPrevMessages([
       ...allPrevMessages,
       {
@@ -486,6 +474,9 @@ export default ChatScreen = () => {
               size={24}
               color={isRecording ? "red" : "black"}
             />
+            {recordingMillis && (
+              <Text style={{ color: "red" }}>{recordingMillis}</Text>
+            )}
           </TouchableOpacity>
         </View>
       </View>
@@ -618,8 +609,10 @@ const styles = StyleSheet.create({
     marginTop: 10,
   },
   audioIcon: {
-    alignItems: "flex-end",
-    flex: 0.1,
+    alignItems: "center",
+    // flex: 0.12,
+    marginLeft: 5,
+    // justifyContent: "center",
   },
   footer: {
     alignItems: "center",
