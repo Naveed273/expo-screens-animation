@@ -111,12 +111,10 @@ export default ChatScreen = () => {
   const [positionMillis, setpositionMillis] = useState(0);
   const [recordingMillis, setrecordingMillis] = useState(null);
   // const [, set] = useState(second)
-  const [record, setRecord] = useState(null);
   const [sound, setSound] = React.useState(null);
   const [currentIndex, setcurrentIndex] = useState(null);
   const [soundStatus, setSoundStatus] = useState({
     status: null,
-    icon: "playcircleo",
   });
   async function startRecording() {
     try {
@@ -158,14 +156,14 @@ export default ChatScreen = () => {
             setisPlaying(false);
           }
           if (status.positionMillis === status.durationMillis) {
-            setSoundStatus({ status: null, icon: "playcircleo" });
+            setSoundStatus({ status: null });
             setpositionMillis(null);
           }
         }
       );
 
       setSound(sound);
-      setSoundStatus({ status: status, icon: "pausecircleo" });
+      setSoundStatus({ status: status });
     }
 
     //pause audio
@@ -173,7 +171,7 @@ export default ChatScreen = () => {
       if (soundStatus.status.isLoaded && soundStatus.status.isPlaying) {
         const status = await sound.pauseAsync();
         console.log("pausingStatus", { ...status });
-        setSoundStatus({ status: status, icon: "playcircleo" });
+        setSoundStatus({ status: status });
       }
 
       //resuming audio
@@ -185,13 +183,13 @@ export default ChatScreen = () => {
         const status = await sound.playAsync();
 
         console.log("resumingStatus", { ...status });
-        setSoundStatus({ status: status, icon: "playcircleo" });
+        setSoundStatus({ status: status });
       }
       // replaying audio
       if (!soundStatus.status.isLoaded && !soundStatus.status.isPlaying) {
         const status = await sound.replayAsync();
         console.log("replayingStatus", { ...status });
-        setSoundStatus({ status: status, icon: "playcircleo" });
+        setSoundStatus({ status: status });
       }
     }
   };
@@ -214,11 +212,11 @@ export default ChatScreen = () => {
       duration: getDurationFormatted(status.durationMillis),
       file: uri,
     });
-    setRecord({
-      sound: sound,
-      duration: getDurationFormatted(status.durationMillis),
-      file: uri,
-    });
+    // setRecord({
+    //   sound: sound,
+    //   duration: getDurationFormatted(status.durationMillis),
+    //   file: uri,
+    // });
     setRecordings(updatedRecordings);
     setAllPrevMessages([
       ...allPrevMessages,
@@ -335,7 +333,7 @@ export default ChatScreen = () => {
                           <View style={styles.row}>
                             <AntDesign
                               // onPress={() => item.sound.replayAsync()}
-                              onPress={() => handleAudio(record, index)}
+                              onPress={() => handleAudio(recording, index)}
                               name={
                                 currentIndex === index
                                   ? isPlaying
@@ -390,7 +388,7 @@ export default ChatScreen = () => {
                           <View style={styles.row}>
                             <AntDesign
                               // onPress={() => item.sound.replayAsync()}
-                              onPress={() => handleAudio(record, index)}
+                              onPress={() => handleAudio(recording, index)}
                               name={
                                 currentIndex === index
                                   ? isPlaying
@@ -517,24 +515,6 @@ const styles = StyleSheet.create({
     color: "black",
     marginRight: 5,
   },
-  greenDot: {
-    height: 8,
-    width: 8,
-    marginLeft: 5,
-    backgroundColor: "#62CEAA",
-    borderRadius: 20,
-  },
-  positionTextView: {
-    flexDirection: "column",
-    justifyContent: "center",
-    alignItems: "flex-start",
-  },
-  positionText: {
-    fontSize: 14,
-    fontWeight: "400",
-    color: "black",
-    marginHorizontal: 5,
-  },
   dateText: {
     fontWeight: "600",
     fontSize: 14,
@@ -542,19 +522,7 @@ const styles = StyleSheet.create({
     textAlign: "center",
     width: "100%",
   },
-  tamplateIcon: {
-    flex: 1,
-    flexDirection: "row",
-    justifyContent: "flex-end",
-    alignItems: "center",
-    marginTop: 8,
-  },
-  callIcon: {
-    flex: 1,
-    flexDirection: "row",
-    justifyContent: "flex-end",
-    alignItems: "center",
-  },
+
   messageBody: {
     flex: 1,
   },
@@ -626,9 +594,7 @@ const styles = StyleSheet.create({
     borderBottomWidth: 0,
     borderColor: "#e4e4e4",
   },
-  plusButton: {
-    marginHorizontal: 10,
-  },
+
   messageInputContainer: {
     paddingHorizontal: 10,
     marginHorizontal: 15,
@@ -646,82 +612,7 @@ const styles = StyleSheet.create({
     flex: 0.2,
     alignItems: "flex-end",
   },
-  shareContainer: {
-    flexDirection: "column",
-    justifyContent: "space-around",
-    marginVertical: 40,
-    marginHorizontal: 110,
-  },
-  firstRow: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-  },
-  secondRow: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-  },
-  shareIcons1: {
-    alignItems: "center",
-    justifyContent: "center",
-    width: 60,
-    height: 60,
-    marginHorizontal: 10,
-    marginVertical: 5,
-    borderRadius: 1000,
-    backgroundColor: "#4e30a8",
-  },
-  shareIcons2: {
-    alignItems: "center",
-    justifyContent: "center",
-    width: 60,
-    height: 60,
-    marginHorizontal: 10,
-    marginVertical: 5,
-    borderRadius: 1000,
-    backgroundColor: "#a43b3b",
-  },
-  shareIcons3: {
-    alignItems: "center",
-    justifyContent: "center",
-    width: 60,
-    height: 60,
-    marginHorizontal: 10,
-    marginVertical: 5,
-    borderRadius: 1000,
-    backgroundColor: "#8d4b9a",
-  },
-  shareIcons4: {
-    alignItems: "center",
-    justifyContent: "center",
-    width: 60,
-    height: 60,
-    marginHorizontal: 10,
-    marginVertical: 5,
-    borderRadius: 1000,
-    backgroundColor: "#FFA500",
-  },
-  shareIcons5: {
-    alignItems: "center",
-    justifyContent: "center",
-    width: 60,
-    height: 60,
-    marginHorizontal: 10,
-    marginVertical: 5,
-    borderRadius: 1000,
-    backgroundColor: "#489464",
-  },
-  shareIcons6: {
-    alignItems: "center",
-    justifyContent: "center",
-    width: 60,
-    height: 60,
-    marginHorizontal: 10,
-    marginVertical: 5,
-    borderRadius: 1000,
-    backgroundColor: "#115ece",
-  },
+
   iconsText: {
     fontSize: 14,
     fontWeight: "700",
